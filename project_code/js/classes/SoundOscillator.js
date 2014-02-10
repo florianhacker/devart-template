@@ -1,8 +1,5 @@
 FH.SoundOscillator = (function(){
 
-	this.type = null;
-	this.frequency;
-
 	function SoundOscillator( type, frequency ){
 		
 		this.type = type;
@@ -19,6 +16,8 @@ FH.SoundOscillator = (function(){
 		oscillator.frequency.value = this.frequency; 
 		oscillator.connect(context.destination); 
 	}
+
+	
 
 	SoundOscillator.prototype.play = function(){
 
