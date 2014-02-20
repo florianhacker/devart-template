@@ -2,11 +2,9 @@ var FH = FH || {};
 
 function init(){
 
-	var oscillator = new FH.SoundOscillator(0, 200);
-	oscillator.play();
+	// global context
+	CONTEXT = new webkitAudioContext();
 
-	var textToSpeech = new FH.TextToSpeech();
-	setInterval(function(){
-		textToSpeech.speak('The sound of silence');
-	}, 3000);
+	var mainView = new FH.MainView(window.innerWidth, window.innerHeight);
+	var mainViewController = new FH.MainViewController(mainView);
 }

@@ -11,13 +11,13 @@ FH.TextToSpeech = (function(){
 	TextToSpeech.prototype.init = function(){	
 
 		this.audio = new Audio();
-	}
+	};
 
 	TextToSpeech.prototype.speak = function(whatToSpeak){	
 		
 		this.audio.src = this.baseUrl + whatToSpeak;
 		this.audio.play();
-	}
+	};
 
 	return TextToSpeech;
 
