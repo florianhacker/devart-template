@@ -17,7 +17,7 @@ FH.SoundOscillatorView.prototype.init = function(soundSpectrum){
 	this.view.setInteractive(this.view);
 	this.initTouchGestures(this.view, 'osc');
 
-	this.drawSpectrum();
+	//this.drawSpectrum();
 
 
 	// this.addChild(this.view);
@@ -55,17 +55,43 @@ FH.SoundOscillatorView.prototype.addEventListeners = function(soundSpectrum){
 	
 };
 
+FH.SoundOscillatorView.prototype.addModel = function(model){
+	
+	var _this = this;
+	this.model = model;
+
+	this.model.analyzer.addEventListener('sound-analayzed', function(data){
+
+		if(data){
+			_this.drawSpectrum(data.soundSpectrum);
+		}
+	});
+
+};
+
 FH.SoundOscillatorView.prototype.destroy = function(soundSpectrum){
+
 	this.dispatchEvent( { type: 'oscillator-view-destroyed' });
 };
 
 
 FH.SoundOscillatorView.prototype.drawSpectrum = function(soundSpectrum){
+		
+		console.log( soundSpectrum )
+		var frequencies = soundSpectrum;//[10,10,10,10,10,10,10, 10, 10, 10, 10, 10];
+		var amount = (Math.PI*2)/(frequencies.length-1);//frequencies.length;    
 
-	this.view.beginFill(0xFF3300);
-	this.view.drawCircle(0, 0, 40);
+		this.view.beginFill(0xFFFFFF);
+		this.view.lineStyle(5, 0xFF0000);
 
-	this.view.hitArea = new PIXI.Circle(0, 0, 40);
+		for (var i=0; i < frequencies.length; i++)
+		{
+			var volume = 100 + frequencies[i];
+        	this.view.lineTo( volume*Math.cos(amount*i), volume*Math.sin(amount*i));
+		}
+		this.view.endFill();
+
+		this.view.hitArea = new PIXI.Circle(0, 0, 100);
 };
 
 

@@ -4,7 +4,6 @@ FH.AbstractView = function(width, height){
 
 FH.AbstractView.prototype.initTouchGestures = function(displayObject, name){
 
-	console.log(displayObject, name)
 	var startPosition = null;
 	var _this = this;
 
@@ -21,15 +20,11 @@ FH.AbstractView.prototype.initTouchGestures = function(displayObject, name){
 	};
 
 	displayObject.mouseup = displayObject.mouseup = function(data){
-
-		console.log( data )
 		
 		data.originalEvent.stopPropagation();
 		data.originalEvent.preventDefault();
 
 		if( startPosition.x === data.global.x && startPosition.y === data.global.y){
-
-			console.log("start:", _this.timer);
 
 			if (_this.timer){
 				// double click

@@ -26,3 +26,5 @@ Object.defineProperty(FH.GainNode.prototype, 'volume', {
         this.gainNode.gain = value;
     }
 });
+
+EventDispatcher.prototype.apply( FH.GainNode.prototype );

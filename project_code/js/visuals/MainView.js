@@ -11,7 +11,8 @@ FH.MainView.prototype = Object.create( FH.AbstractView.prototype );
 FH.MainView.prototype.init = function(width, height){	
 	
 	this.stage = new PIXI.Stage(0x000000, true);
-	this.renderer = PIXI.autoDetectRenderer(width, height);
+//	this.renderer = PIXI.autoDetectRenderer(width, height);
+	this.renderer = PIXI.CanvasRenderer(width, height);
 	document.body.appendChild(this.renderer.view);
 
 	this.appBackground = new FH.AppBackground();
