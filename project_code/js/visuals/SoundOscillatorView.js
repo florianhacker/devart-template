@@ -11,6 +11,8 @@ FH.SoundOscillatorView.prototype = Object.create( FH.AbstractView.prototype );
 
 FH.SoundOscillatorView.prototype.init = function(soundSpectrum){	
 
+	this.helper = 0;
+
 	this.view = new PIXI.Graphics();
 	this.view.setInteractive(true);
 
@@ -76,22 +78,28 @@ FH.SoundOscillatorView.prototype.destroy = function(soundSpectrum){
 
 
 FH.SoundOscillatorView.prototype.drawSpectrum = function(soundSpectrum){
-		
-		console.log( soundSpectrum )
-		var frequencies = soundSpectrum;//[10,10,10,10,10,10,10, 10, 10, 10, 10, 10];
-		var amount = (Math.PI*2)/(frequencies.length-1);//frequencies.length;    
 
-		this.view.beginFill(0xFFFFFF);
-		this.view.lineStyle(5, 0xFF0000);
+	var frequency = Math.floor(this.model.oscillator.frequency);
+//	console.log(frequency)
 
-		for (var i=0; i < frequencies.length; i++)
-		{
-			var volume = 100 + frequencies[i];
-        	this.view.lineTo( volume*Math.cos(amount*i), volume*Math.sin(amount*i));
-		}
-		this.view.endFill();
+	var frequencies = soundSpectrum;//[10,10,10,10,10,10,10, 10, 10, 10, 10, 10];
+	var amount = (Math.PI*2)/(frequencies.length-1);//frequencies.length;    
 
-		this.view.hitArea = new PIXI.Circle(0, 0, 100);
+	this.view.clear();
+	this.view.beginFill(0xFF0000);
+	this.view.lineStyle(1, 0xFF0000);
+
+	this.helper+= frequency/1000;
+	
+	for (var i=0; i < frequencies.length; i++)
+	{
+		//var volume = 100 + frequencies[i]*0.09;
+		var volume = 100 + ( Math.sin(this.helper) );
+    	this.view.lineTo( volume*Math.cos(amount*i), volume*Math.sin(amount*i));
+	}
+	this.view.endFill();
+
+	this.view.hitArea = new PIXI.Circle(0, 0, 100);
 };
 
 

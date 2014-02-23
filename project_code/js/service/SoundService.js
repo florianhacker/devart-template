@@ -8,7 +8,7 @@ FH.SOUNDSERVICE = {
 
 	getOscillator : function(){
 
-		var frequency = 200;
+		var frequency = 20;
 		var waveForm = 1;
 		var oscillator = new FH.SoundOscillator(waveForm, frequency);
 

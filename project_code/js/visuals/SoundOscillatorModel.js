@@ -20,10 +20,11 @@ FH.SoundOscillatorModel.prototype.createSound = function(){
 	
 	this.oscillator.play();
 	this.oscillator.connect( this.filter.input );
-	console.log(this.analyzer.input )
+
 	this.filter.connect( this.analyzer.input );
+	//this.filter.connect( CONTEXT.destination );
 
 	this.analyzer.connect( CONTEXT.destination );
 
-//	this.filter.cutOffFrequency = 200;
+	this.filter.cutOffFrequency = 1000;
 };

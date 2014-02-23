@@ -1,7 +1,7 @@
 FH.SoundAnalyzer = function( ){
 
 	this.analyzer = CONTEXT.createAnalyser();
-	this.analyzer.smoothingTimeConstant = 0.86;
+	this.analyzer.smoothingTimeConstant = 0.6;
 	this.analyzer.fftSize = 512;
 
 	FH.GainNode.call( this, this.analyzer );
@@ -23,14 +23,30 @@ FH.SoundAnalyzer.prototype.analyze = function(channels){
 
 	this.analyzer.getByteFrequencyData( this.fSpectrumArray );
 	
-	var spectrum = this.splitSoundSpectrum( this.fSpectrumArray, 8 );
+	var channelSpectrum = this.splitSoundSpectrum( this.fSpectrumArray, 64 );
+	var spectrum = this.getActiveFrequencies( this.fSpectrumArray );
 
-	this.dispatchEvent( { type: 'sound-analayzed', soundSpectrum : this.fSpectrumArray });
+	this.dispatchEvent( { type: 'sound-analayzed', soundSpectrum : channelSpectrum });
 
 	requestAnimFrame( this.analyze.bind(this) );
 
 
 	//return isNaN(channels) ? fSpectrumArray : this.splitSoundSpectrum( fSpectrumArray, channels );
+
+};
+
+FH.SoundAnalyzer.prototype.getActiveFrequencies = function( soundSpectrum ){
+		
+	var activeFrequencies = [];
+
+	for(var i = 0; i < soundSpectrum.length; i++){
+
+		if(soundSpectrum[i] > 0 ){
+			activeFrequencies.push( soundSpectrum[i] );
+		}
+	}
+
+	return activeFrequencies;
 
 };
 
