@@ -1,15 +1,15 @@
-FH.SoundOscillatorModel = function(){
+FH.SoundOscillatorModel = function(oscillatorIndex){
 
-	this.init();
+	this.init(oscillatorIndex);
 };
 
 FH.SoundOscillatorModel.constructor = FH.SoundOscillatorModel;
 FH.SoundOscillatorModel.prototype = Object.create( FH.AbstractView.prototype );
 
-FH.SoundOscillatorModel.prototype.init = function(soundSpectrum){	
-
+FH.SoundOscillatorModel.prototype.init = function(oscillatorIndex){	
+	
 	this.analyzer = new FH.SoundAnalyzer();
-	this.oscillator = FH.SOUNDSERVICE.getOscillator();
+	this.oscillator = FH.SOUNDSERVICE.getOscillator( oscillatorIndex );
 	this.filter = FH.SOUNDSERVICE.getSoundFilter();
 
 	this.createSound();

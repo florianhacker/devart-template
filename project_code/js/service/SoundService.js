@@ -6,10 +6,9 @@ FH.SOUNDSERVICE = {
 		return soundFilter;
 	},
 
-	getOscillator : function(){
+	getOscillator : function(waveForm){
 
 		var frequency = 20;
-		var waveForm = 1;
 		var oscillator = new FH.SoundOscillator(waveForm, frequency);
 
 		oscillator.value = Math.random();

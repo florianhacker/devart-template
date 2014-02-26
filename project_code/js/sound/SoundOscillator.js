@@ -34,3 +34,13 @@ Object.defineProperty(FH.SoundOscillator.prototype, 'frequency', {
         this.oscillator.frequency.value = value;
     }
 });
+
+Object.defineProperty(FH.SoundOscillator.prototype, 'waveform', {
+    
+    get: function() {
+        return this.oscillator.type;
+    },
+    set: function(value) {
+        this.oscillator.type = value;
+    }
+});
