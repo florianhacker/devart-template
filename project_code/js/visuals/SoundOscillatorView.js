@@ -52,6 +52,14 @@ FH.SoundOscillatorView.prototype.addEventListeners = function(soundSpectrum){
 		_this.dispatchEvent( {type: 'change-octave-down'} );	
 	});
 
+	this.arrowLeft.addEventListener('click', function(e){
+		_this.dispatchEvent( {type: 'change-waveform-left'} );	
+	});
+
+	this.arrowRight.addEventListener('click', function(e){
+		_this.dispatchEvent( {type: 'change-waveform-right'} );	
+	});
+
 
 	var hammertime = new Hammer( _this.view );
 	

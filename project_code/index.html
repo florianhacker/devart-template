@@ -46,11 +46,34 @@
 		.arrow-down,
 		.arrow-left,
 		.arrow-right{
-			margin: 40px 5px 0 5px;
 			width: 10px;
 			height: 10px;
 			background: white;
-			display: inline-block;
+			position: absolute;
+		}
+
+		.arrow-up{ 
+			top: 10px;
+			left: 50%; 
+			-webkit-transform: translateX(-50%); 
+		}
+
+		.arrow-down{ 
+			bottom: 10px;
+			left: 50%; 
+			-webkit-transform: translateX(-50%); 
+		}
+
+		.arrow-left{ 
+			top: 50%;
+			left: 10px;
+			-webkit-transform: translateY(-50%); 
+		}
+
+		.arrow-right{ 
+			top: 50%;
+			right: 10px;
+			-webkit-transform: translateY(-50%); 
 		}
 
 
