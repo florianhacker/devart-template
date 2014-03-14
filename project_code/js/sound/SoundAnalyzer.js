@@ -1,7 +1,7 @@
 FH.SoundAnalyzer = function( ){
 
 	this.analyzer = CONTEXT.createAnalyser();
-	this.analyzer.smoothingTimeConstant = 0.6;
+	this.analyzer.smoothingTimeConstant = 0.99;
 	this.analyzer.fftSize = 512;
 
 	FH.GainNode.call( this, this.analyzer );
@@ -23,10 +23,12 @@ FH.SoundAnalyzer.prototype.analyze = function(channels){
 
 	this.analyzer.getByteFrequencyData( this.fSpectrumArray );
 	
-	var channelSpectrum = this.splitSoundSpectrum( this.fSpectrumArray, 64 );
-	var spectrum = this.getActiveFrequencies( this.fSpectrumArray );
+	// var channelSpectrum = this.splitSoundSpectrum( this.fSpectrumArray, 64 );
+	// var spectrum = this.getActiveFrequencies( this.fSpectrumArray );
 
-	this.dispatchEvent( { type: 'sound-analayzed', soundSpectrum : channelSpectrum });
+	// this.dispatchEvent( { type: 'sound-analayzed', soundSpectrum : channelSpectrum });
+
+	this.dispatchEvent( { type: 'sound-analayzed', soundSpectrum : this.fSpectrumArray });
 
 	requestAnimFrame( this.analyze.bind(this) );
 

@@ -9,10 +9,11 @@ FH.SoundOscillatorController.prototype.init = function(view){
 	this.oscillatorIndex = 2;
 	this.octaveIndex = 1;
 
+	this.count = 0;
 	this.octaves = [ 20, 40, 80, 160,  320, 640, 1280, 2560, 5120, 10240, 20480 ];
 
 	// init
-	this.model = new FH.SoundOscillatorModel(this.oscillatorIndex);
+	this.model = new FH.SoundOscillatorModel(this.oscillatorIndex, 200, 1000);
 
 	this.view = view;
 	this.view.addModel(this.model);
@@ -39,12 +40,10 @@ FH.SoundOscillatorController.prototype.addEventListeners = function(){
 	this.view.addEventListener("change-octave-up", function(e){
 		
 		if(_this.octaveIndex < 10){
-	
+			
 			_this.model.oscillator.frequency*=2;;
 			_this.octaveIndex++;
-			console.log("oscillatorFrequency", _this.model.oscillator.frequency);
 		} 
-
 	});
 
 	this.view.addEventListener("change-octave-down", function(e){
@@ -53,23 +52,26 @@ FH.SoundOscillatorController.prototype.addEventListeners = function(){
 
 			_this.model.oscillator.frequency/=2;
 			_this.octaveIndex--;
-			console.log("oscillatorFrequency", _this.model.oscillator.frequency);
 		} 
 	});
+
+	this.model.analyzer.addEventListener('sound-analayzed', function(data){});	
 	
 	this.view.addEventListener("oscillator-view-moving", function(e){
 		
-		// add a minium of 20 hz
 		var oscillatorFrequency = _this.octaves[_this.octaveIndex-1] + _this.octaves[_this.octaveIndex] * (e.position.y/window.innerHeight);
 		_this.model.oscillator.frequency = oscillatorFrequency;
+	});
 
-		console.log(oscillatorFrequency)
 
-		var cutoffFilterFrequency = 40 + (440-40 * (e.position.x/window.innerWidth) );
+	this.view.addEventListener("filter-view-moving", function(e){
+		
+		var cutoffFilterFrequency = 440 * (e.position.y/window.innerHeight);
 		_this.model.filter.cutOffFrequency = cutoffFilterFrequency;
 	});
 
-	this.view.addEventListener("fh-item-double-click", function(e){
-		this.view.destroy();
+	this.view.addEventListener("double-click", function(e){
+
+		_this.view.addFilter();
 	});
 };

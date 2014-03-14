@@ -9,6 +9,12 @@ FH.SoundOscillatorView.prototype = Object.create( FH.AbstractView.prototype );
 
 FH.SoundOscillatorView.prototype.init = function(soundSpectrum){	
 
+	this.canvas = document.getElementById('myCanvas');
+	this.canvas.width = window.innerWidth;
+	this.canvas.height = window.innerHeight;
+
+	this.ctx = this.canvas.getContext('2d');
+
 	this.view = document.createElement('div');
 	this.view.className = "osc";
 
@@ -42,6 +48,8 @@ FH.SoundOscillatorView.prototype.addEventListeners = function(soundSpectrum){
 	this.view.addEventListener('dblclick', function(e){
 		e.stopPropagation();
 		e.preventDefault();	
+
+		_this.dispatchEvent( {type: 'double-click'} );	
 	});
 
 	this.arrowUp.addEventListener('click', function(e){
@@ -73,33 +81,32 @@ FH.SoundOscillatorView.prototype.addEventListeners = function(soundSpectrum){
 
 		_this.dispatchEvent( { type: 'oscillator-view-moving', position : { x : x, y : y }});
 
-	});
+	});	
+};
 
-
-	// this.view.mousedown = this.view.touchstart = function(data){
-
-	// 	data.originalEvent.preventDefault();
-		
-	// 	_this.data = data;
-	// 	_this.dragging = true;
-	// };
-
-	// this.view.mousemove = this.view.touchmove = function(data){
-
-	// 	if(_this.data && _this.dragging){
-	// 		var newPosition = _this.data.getLocalPosition(_this.view.parent);
-	// 		_this.view.position.x = newPosition.x;
-	// 		_this.view.position.y = newPosition.y;
-
-	// 		_this.dispatchEvent( { type: 'oscillator-view-moving', view : _this.view });
-	// 	}
-	// };
-
-	// this.view.mouseup = this.view.mouseup = function(data){
-		
-	// 	_this.dragging = null;
-	// };
+FH.SoundOscillatorView.prototype.addFilter = function(){
 	
+	this.filter = document.createElement('div');
+	this.filter.className = "filter";
+	this.filter.style.left = 100;
+	this.filter.style.top = 100;
+
+	document.body.appendChild(this.filter);
+
+	var hammertime = new Hammer( this.filter );
+	var _this = this;
+
+	hammertime.on("drag", function(ev) {
+
+		var x = ev.gesture.center.pageX;
+		var y = ev.gesture.center.pageY;
+
+		_this.filter.style.left = x + "px";
+		_this.filter.style.top = y + "px";
+
+		_this.dispatchEvent( { type: 'filter-view-moving', position : { x : x, y : y }});
+
+	});	
 };
 
 FH.SoundOscillatorView.prototype.addModel = function(model){
@@ -124,27 +131,36 @@ FH.SoundOscillatorView.prototype.destroy = function(soundSpectrum){
 
 FH.SoundOscillatorView.prototype.drawSpectrum = function(soundSpectrum){
 
-// 	var frequency = Math.floor(this.model.oscillator.frequency);
-// //	console.log(frequency)
+	// var f = soundSpectrum;
+	// var _this = this;
 
-// 	var frequencies = soundSpectrum;//[10,10,10,10,10,10,10, 10, 10, 10, 10, 10];
-// 	var amount = (Math.PI*2)/(frequencies.length-1);//frequencies.length;    
+	// _this.ctx.clearRect(0, 0, _this.canvas.width, _this.canvas.height);
 
-// 	this.view.clear();
-// 	this.view.beginFill(0xFF0000);
-// 	this.view.lineStyle(1, 0xFF0000);
+	// for ( var i = 0; i < (soundSpectrum.length); i++ ){
+	// 	var value = soundSpectrum[i];
+	// 	_this.ctx.fillRect(i*5,_this.canvas.height-value,3,_this.canvas.height);
+	// }
 
-// 	this.helper+= frequency/1000;
-	
-// 	for (var i=0; i < frequencies.length; i++)
-// 	{
-// 		//var volume = 100 + frequencies[i]*0.09;
-// 		var volume = 100 + ( Math.sin(this.helper) );
-//     	this.view.lineTo( volume*Math.cos(amount*i), volume*Math.sin(amount*i));
-// 	}
-// 	this.view.endFill();
+	// var offset = this.canvas.width / soundSpectrum.length;
+	// var x = 0;
 
-// 	this.view.hitArea = new PIXI.Circle(0, 0, 100);
+	// _this.ctx.clearRect(0, 0, _this.canvas.width, _this.canvas.height);
+	// _this.ctx.moveTo( 0, 0);
+
+	// _this.ctx.save();
+
+	// for(var i = 0; i<soundSpectrum.length; i++){
+
+	// 	_this.ctx.translate(x, 0);
+	// 	_this.ctx.lineTo( 0, soundSpectrum[i]*10);
+
+	// 	x+=offset;
+ //   	}
+
+	// _this.ctx.stroke();
+	// _this.ctx.restore();
+
+
 };
 
 
