@@ -9,33 +9,17 @@ FH.SoundOscillatorView.prototype = Object.create( FH.AbstractView.prototype );
 
 FH.SoundOscillatorView.prototype.init = function(soundSpectrum){	
 
-	this.canvas = document.getElementById('myCanvas');
-	this.canvas.width = window.innerWidth;
-	this.canvas.height = window.innerHeight;
+	// this.canvas = document.getElementById('myCanvas');
+	// this.canvas.width = window.innerWidth;
+	// this.canvas.height = window.innerHeight;
+	// this.ctx = this.canvas.getContext('2d');
 
-	this.ctx = this.canvas.getContext('2d');
-
-	this.view = document.createElement('div');
-	this.view.className = "osc";
-
-	this.arrowUp = document.createElement('span');
-	this.arrowUp.className = "arrow-up";
-
-	this.arrowDown = document.createElement('span');
-	this.arrowDown.className = "arrow-down";
-
-	this.arrowLeft = document.createElement('span');
-	this.arrowLeft.className = "arrow-left";
-
-	this.arrowRight = document.createElement('span');
-	this.arrowRight.className = "arrow-right";
-
-	this.view.appendChild(this.arrowUp);
-	this.view.appendChild(this.arrowDown);
-	this.view.appendChild(this.arrowLeft);
-	this.view.appendChild(this.arrowRight);
-
-	this.helper = 0;
+	this.view = document.querySelector('.template.osc').cloneNode(true);
+	this.view.classList.remove('template');
+	this.arrowUp = this.view.querySelector('.arrow-up');
+	this.arrowDown = this.view.querySelector('.arrow-down');
+	this.arrowLeft = this.view.querySelector('.arrow-left');
+	this.arrowRight = this.view.querySelector('.arrow-right');
 
 	this.addEventListeners();
 };
@@ -46,25 +30,29 @@ FH.SoundOscillatorView.prototype.addEventListeners = function(soundSpectrum){
 	var _this = this;
 
 	this.view.addEventListener('dblclick', function(e){
+
 		e.stopPropagation();
 		e.preventDefault();	
-
 		_this.dispatchEvent( {type: 'double-click'} );	
 	});
 
 	this.arrowUp.addEventListener('click', function(e){
+
 		_this.dispatchEvent( {type: 'change-octave-up'} );	
 	});
 
 	this.arrowDown.addEventListener('click', function(e){
+
 		_this.dispatchEvent( {type: 'change-octave-down'} );	
 	});
 
 	this.arrowLeft.addEventListener('click', function(e){
+
 		_this.dispatchEvent( {type: 'change-waveform-left'} );	
 	});
 
 	this.arrowRight.addEventListener('click', function(e){
+
 		_this.dispatchEvent( {type: 'change-waveform-right'} );	
 	});
 
@@ -80,18 +68,46 @@ FH.SoundOscillatorView.prototype.addEventListeners = function(soundSpectrum){
 		_this.view.style.top = y + "px";
 
 		_this.dispatchEvent( { type: 'oscillator-view-moving', position : { x : x, y : y }});
-
 	});	
 };
 
 FH.SoundOscillatorView.prototype.addFilter = function(){
 	
-	this.filter = document.createElement('div');
-	this.filter.className = "filter";
-	this.filter.style.left = 100;
-	this.filter.style.top = 100;
-
+	this.filter = document.querySelector('.template.filter').cloneNode(true);
+	this.filter.classList.remove('template');
+	this.filterArrowUp = this.filter.querySelector('.arrow-up');
+	this.filterArrowDown = this.filter.querySelector('.arrow-down');
+	this.filterArrowLeft = this.filter.querySelector('.arrow-left');
+	this.filterArrowRight = this.filter.querySelector('.arrow-right');
 	document.body.appendChild(this.filter);
+
+
+	this.filter.addEventListener('dblclick', function(e){
+		e.stopPropagation();
+		e.preventDefault();	
+		//_this.dispatchEvent( {type: 'filter-double-click'} );	
+	});
+
+	this.filterArrowUp.addEventListener('click', function(e){
+
+		_this.dispatchEvent( {type: 'filter-arrow-up-clicked'} );	
+	});
+
+	this.filterArrowDown.addEventListener('click', function(e){
+
+		_this.dispatchEvent( {type: 'filter-arrow-down-clicked'} );	
+	});
+
+	this.filterArrowLeft.addEventListener('click', function(e){
+
+		_this.dispatchEvent( {type: 'filter-arrow-left-clicked'} );	
+	});
+
+	this.filterArrowRight.addEventListener('click', function(e){
+
+		_this.dispatchEvent( {type: 'filter-arrow-right-clicked'} );	
+	});
+
 
 	var hammertime = new Hammer( this.filter );
 	var _this = this;

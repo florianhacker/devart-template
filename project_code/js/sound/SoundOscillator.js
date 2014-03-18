@@ -7,6 +7,7 @@ FH.SoundOscillator = function( type, frequency ){
 
 	// extend Gain
 	FH.GainNode.call( this, this.oscillator );
+    this.init();
 };
 
 FH.SoundOscillator.constructor = FH.SoundOscillator;

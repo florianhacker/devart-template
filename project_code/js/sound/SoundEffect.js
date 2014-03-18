@@ -6,6 +6,7 @@ FH.SoundEffect = function( filterType, cutOffFrequency ){
 
 	// extend Gain
 	FH.GainNode.call( this, this.filter );
+	this.init();
 };
 
 FH.SoundEffect.constructor = FH.SoundEffect;

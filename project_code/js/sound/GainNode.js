@@ -2,7 +2,7 @@ FH.GainNode = function(input){
 
 	this.input = input;
 	this.gainNode = CONTEXT.createGain();
-	this.init();
+	//this.init();
 };
 
 FH.GainNode.prototype.init = function(){

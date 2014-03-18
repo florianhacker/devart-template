@@ -5,6 +5,7 @@ FH.SoundAnalyzer = function( ){
 	this.analyzer.fftSize = 512;
 
 	FH.GainNode.call( this, this.analyzer );
+	this.init();
 };
 
 FH.SoundAnalyzer.constructor = FH.SoundAnalyzer;
